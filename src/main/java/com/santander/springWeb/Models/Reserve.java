@@ -1,6 +1,5 @@
 package com.santander.springWeb.Models;
 
-import com.santander.springWeb.Enums.ReserveStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -24,6 +23,13 @@ public class Reserve {
 
     @Column
     private String status;
+
+    public void update(Reserve reserve) {
+        this.setId_user(reserve.getId_user());
+        this.setId_destiny(reserve.getId_destiny());
+        this.setReserve_date(reserve.getReserve_date());
+        this.setStatus(reserve.getStatus());
+    }
 
     public int getId() {
         return id;
