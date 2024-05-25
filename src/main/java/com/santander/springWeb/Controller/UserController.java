@@ -3,9 +3,7 @@ package com.santander.springWeb.Controller;
 import com.santander.springWeb.Models.User;
 import com.santander.springWeb.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,10 +23,24 @@ public class UserController {
         return userRepo.findAll();
     }
 
-    @GetMapping(value = "/api/users/${id}")
+    @GetMapping(value = "/api/users/{id}")
     public User singleUser(@PathVariable("id") int id) {
         return userRepo.findById(id).get();
     }
+
+    @PutMapping(value = "/api/users/{id}/update")
+    public void updateUser(@PathVariable("id") int id, @RequestBody User user) {
+        User uFinded = userRepo.findById(id).get();
+        uFinded.update(user.getName(), user.getEmail(), user.getBirth());
+        userRepo.save(uFinded);
+    }
+
+    @DeleteMapping(value = "/api/users/{id}/delete")
+    public void deleteUser(@PathVariable("id") int id) {
+        User uFinded = userRepo.findById(id).get();
+        userRepo.deleteById(id);
+    }
 }
+
 
 
