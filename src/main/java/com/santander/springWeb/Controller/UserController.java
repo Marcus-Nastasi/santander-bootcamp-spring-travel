@@ -28,6 +28,11 @@ public class UserController {
         return userRepo.findById(id).get();
     }
 
+    @PostMapping(value = "/api/users/add")
+    public void insertUser(@RequestBody User user) {
+        userRepo.save(user);
+    }
+
     @PutMapping(value = "/api/users/{id}/update")
     public void updateUser(@PathVariable("id") int id, @RequestBody User user) {
         User uFinded = userRepo.findById(id).get();
@@ -37,8 +42,7 @@ public class UserController {
 
     @DeleteMapping(value = "/api/users/{id}/delete")
     public void deleteUser(@PathVariable("id") int id) {
-        User uFinded = userRepo.findById(id).get();
-        userRepo.deleteById(id);
+        if(userRepo.findById(id).isPresent()) userRepo.deleteById(id);
     }
 }
 
