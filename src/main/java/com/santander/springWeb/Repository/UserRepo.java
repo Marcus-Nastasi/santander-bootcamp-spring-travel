@@ -1,5 +1,6 @@
 package com.santander.springWeb.Repository;
 
+import com.santander.springWeb.Models.Reserve;
 import com.santander.springWeb.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
     @Query(value="SELECT * FROM users u WHERE u.email = ?", nativeQuery=true)
     User findByEmailAddress(String emailAddress);
+
+    //@Query(value = "SELECT u.*, r.* FROM users u INNER JOIN reserve r ON r.id_user = u.id;", nativeQuery = true)
 }
 
 

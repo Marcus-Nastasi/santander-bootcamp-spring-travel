@@ -5,6 +5,7 @@ import com.santander.springWeb.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,12 @@ public class UserController {
     public User getByEmail(@PathVariable String email) {
         return userRepo.findByEmailAddress(email);
     }
+
+    /*
+    @GetMapping(value = "/api/users/userOnReserve")
+    public HashMap<Integer, Integer> getUserOnReserve() {
+        return userRepo.userIdReserveId();
+    } */
 
     @PostMapping(value = "/api/users/add")
     public void insertUser(@RequestBody User user) {
