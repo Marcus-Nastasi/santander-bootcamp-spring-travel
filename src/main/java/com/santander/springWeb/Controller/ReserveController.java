@@ -46,7 +46,8 @@ public class ReserveController {
     }
 
     @GetMapping(value = "/userOnReserve/{id}")
-    public List<UserOnReserveDTO> getSingleUserOnReserve(@PathVariable int id) {
+    public List<UserOnReserveDTO> getSingleUserOnReserve(@PathVariable int id) throws BusinessException {
+        if (reserveRepo.findById(id).isEmpty()) throw new BusinessException("Reserve not finded");
         List<Object[]> results = reserveRepo.findSingleUserOnReserve(id);
         List<UserOnReserveDTO> userOnReserveDTOS = new ArrayList<>();
 

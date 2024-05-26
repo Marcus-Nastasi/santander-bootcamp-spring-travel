@@ -12,12 +12,16 @@ public interface ReserveRepo extends JpaRepository<Reserve, Integer> {
 
     @Query(value = "SELECT u.id, u.name, u.email, u.birth, " +
             "r.id, r.id_user, r.id_destiny, r.reserve_date, r.status " +
-            "FROM users u INNER JOIN reserve r ON r.id_user = u.id", nativeQuery = true)
+            "FROM users u " +
+            "INNER JOIN reserve r " +
+            "ON r.id_user = u.id", nativeQuery = true)
     List<Object[]> findUserOnReserve();
 
-    @Query(value = "SELECT u.*, " +
-            "r.* " +
-            "FROM users u INNER JOIN reserve r ON r.id_user = u.id WHERE(u.id = ?1)", nativeQuery = true)
+    @Query(value = "SELECT u.*, r.* " +
+            "FROM users u " +
+            "INNER JOIN reserve r " +
+            "ON r.id_user = u.id " +
+            "WHERE(u.id = ?1)", nativeQuery = true)
     List<Object[]> findSingleUserOnReserve(int id);
 }
 
