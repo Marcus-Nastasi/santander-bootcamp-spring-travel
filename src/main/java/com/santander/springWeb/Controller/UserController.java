@@ -28,6 +28,11 @@ public class UserController {
         return userRepo.findById(id).get();
     }
 
+    @GetMapping(value = "/api/users/{email}/getMail")
+    public User getByEmail(@PathVariable String email) {
+        return userRepo.findByEmailAddress(email);
+    }
+
     @PostMapping(value = "/api/users/add")
     public void insertUser(@RequestBody User user) {
         userRepo.save(user);
