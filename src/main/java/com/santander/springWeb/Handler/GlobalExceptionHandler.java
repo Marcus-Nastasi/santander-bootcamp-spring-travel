@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Resource
-    private MessageSource messageSource;
+    private MessageSource messageSource; // get messages from exception origins
 
     private HttpHeaders headers(){
         HttpHeaders headers = new HttpHeaders();
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return headers;
     }
 
-    private ResponseError responseError(String message,HttpStatus statusCode){
+    private ResponseError responseError(String message, HttpStatus statusCode){
         ResponseError responseError = new ResponseError();
         responseError.setStatus("error");
         responseError.setError(message);

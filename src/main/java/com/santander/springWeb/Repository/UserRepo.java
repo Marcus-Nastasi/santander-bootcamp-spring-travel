@@ -1,6 +1,5 @@
 package com.santander.springWeb.Repository;
 
-import com.santander.springWeb.Models.Reserve;
 import com.santander.springWeb.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
