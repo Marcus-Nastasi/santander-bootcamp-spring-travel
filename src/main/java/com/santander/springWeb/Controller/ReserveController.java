@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +38,22 @@ public class ReserveController {
             UserOnReserveDTO dto = new UserOnReserveDTO(
                 (int) o[0], (String) o[1], (String) o[2],  (Date) o[3],
                 (int) o[4], (int) o[5], (int) o[6], (Date) o[7], (String) o[8]
+            );
+            userOnReserveDTOS.add(dto);
+        });
+
+        return userOnReserveDTOS;
+    }
+
+    @GetMapping(value = "/userOnReserve/{id}")
+    public List<UserOnReserveDTO> getSingleUserOnReserve(@PathVariable int id) {
+        List<Object[]> results = reserveRepo.findSingleUserOnReserve(id);
+        List<UserOnReserveDTO> userOnReserveDTOS = new ArrayList<>();
+
+        results.forEach(o -> {
+            UserOnReserveDTO dto = new UserOnReserveDTO(
+                    (int) o[0], (String) o[1], (String) o[2],  (Date) o[3],
+                    (int) o[4], (int) o[5], (int) o[6], (Date) o[7], (String) o[8]
             );
             userOnReserveDTOS.add(dto);
         });
