@@ -7,6 +7,7 @@ public class ResponseError {
     private LocalDate timestamp = LocalDate.now();
     private String status = "error";
     private int statusCode = 400;
+    private String error;
 
     public LocalDate getTimestamp() {
         return timestamp;
@@ -26,6 +27,14 @@ public class ResponseError {
 
     public int getStatusCode() {
         return statusCode;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public void setStatusCode(int statusCode) {
