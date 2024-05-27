@@ -11,10 +11,10 @@ import java.util.List;
 public interface DestinyRepo extends JpaRepository<Destiny, Integer> {
 
     @Query(value = "SELECT d.*, r.* " +
-            "FROM destiny d " +
-            "INNER JOIN reserve r " +
-            "ON r.id_user = d.id " +
-            "WHERE(d.id = ?1)", nativeQuery = true)
+                    "FROM destiny d " +
+                    "INNER JOIN reserve r " +
+                    "ON r.id_user = d.id " +
+                    "WHERE(d.id = ?1)", nativeQuery = true)
     List<Object[]> findAllDestinyReserve(int id);
 }
 
