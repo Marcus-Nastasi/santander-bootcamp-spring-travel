@@ -6,9 +6,14 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.santander.springWeb.DTO.LoginDTO;
 import com.santander.springWeb.Handler.BusinessException;
+import com.santander.springWeb.Models.User;
+import com.santander.springWeb.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,21 +27,22 @@ public class TokenService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepo userRepo;
 
     @Value("${api.spring.security.jwt.secret}")
     private String secret;
 
-    @Bean
-    public String generate(@RequestBody LoginDTO login) throws BusinessException {
+    public String generate(@RequestBody String email) throws BusinessException {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.create().withIssuer("travel-app").withSubject(login.email()).withExpiresAt(exp()).sign(algorithm);
+            UserDetails u = userRepo.findByEmail(email);
+            return JWT.create().withIssuer("travel-app").withSubject(u.getUsername()).withExpiresAt(exp()).sign(algorithm);
         } catch (JWTCreationException e) {
             throw new BusinessException(e.getMessage());
         }
     }
 
-    @Bean
     public String valid(String token) throws BusinessException {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

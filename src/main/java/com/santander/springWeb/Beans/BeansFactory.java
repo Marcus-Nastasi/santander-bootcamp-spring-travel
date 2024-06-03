@@ -1,5 +1,6 @@
 package com.santander.springWeb.Beans;
 
+import com.santander.springWeb.DTO.LoginDTO;
 import com.santander.springWeb.Models.Destiny;
 import com.santander.springWeb.Models.Reserve;
 import com.santander.springWeb.Models.User;
