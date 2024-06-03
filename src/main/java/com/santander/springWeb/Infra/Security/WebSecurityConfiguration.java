@@ -1,5 +1,6 @@
 package com.santander.springWeb.Infra.Security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,14 +13,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfiguration {
 
-    public SecurityFilterChain webSecurityConfiguration(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return(
             http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(h -> h
-                        .anyRequest().permitAll()
-                ).build()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .build()
         );
     }
 }
