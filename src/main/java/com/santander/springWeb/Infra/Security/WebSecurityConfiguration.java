@@ -18,8 +18,8 @@ public class WebSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(h -> {
-                    h.requestMatchers(HttpMethod.GET, "/api/users").permitAll()
-                            .anyRequest().authenticated();
+                    h.requestMatchers(HttpMethod.GET, "/api/users").authenticated()
+                            .anyRequest().permitAll();
                 }).build()
         );
     }
