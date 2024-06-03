@@ -24,10 +24,14 @@ public class User implements UserDetails {
     @Column(name = "birth")
     private LocalDate birth;
 
-    public void update(String name, String email, LocalDate birth) {
+    @Column(name = "password")
+    private String password;
+
+    public void update(String name, String email, LocalDate birth, String password) {
         this.setName(name);
         this.setEmail(email);
         this.setBirth(birth);
+        this.setPassword(password);
     }
 
     @Override
@@ -37,7 +41,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
@@ -79,6 +83,14 @@ public class User implements UserDetails {
 
     public LocalDate getBirth() {
         return birth;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setName(String name) {

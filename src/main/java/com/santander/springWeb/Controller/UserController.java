@@ -4,6 +4,7 @@ import com.santander.springWeb.Handler.BusinessException;
 import com.santander.springWeb.Models.User;
 import com.santander.springWeb.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public class UserController {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/")
     public String hello() {
@@ -41,6 +44,8 @@ public class UserController {
         if (user.getName() == null
                 || user.getEmail() == null
                 || user.getBirth() == null) throw new BusinessException("Required not null values");
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
     }
 
@@ -50,7 +55,8 @@ public class UserController {
         if (userRepo.findById(id).isEmpty()) throw new BusinessException("User not found");
 
         User uFinded = userRepo.findById(id).get();
-        uFinded.update(user.getName(), user.getEmail(), user.getBirth());
+        String pass = passwordEncoder.encode(user.getPassword());
+        uFinded.update(user.getName(), user.getEmail(), user.getBirth(), pass);
 
         userRepo.save(uFinded);
     }
